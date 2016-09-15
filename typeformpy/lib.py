@@ -1,4 +1,6 @@
 import requests
+from errors import TypeFormError, ClientError, ServerError, BadRequest, \
+    UnauthorizedAccess, NotFound, Unavailable
 
 
 _VERSION = "0.0.2"
@@ -31,8 +33,37 @@ class Form(object):
 
 
 class TypeForm(object):
-    def __init__(self, base_uri, api_key):
-        self.base_uri = base_uri
-        self.api_key = api_key
+    def __init__(self, base_uri=None, api_key=None):
+        self._base_uri = base_uri
+        self._api_key = api_key
 
-import pdb; pdb.set_trace()
+    @property
+    def api_key(self):
+        return self._api_key
+
+    @property
+    def base_uri(self):
+        return self._base_uri
+
+    def set_api_key(self, key):
+        self._api_key = key
+
+    def set_base_uri(self, uri):
+        self._base_uri = uri
+
+    def handle_response(self, response):
+        if response.code == 400:
+            raise BadRequest(response)
+        elif response.code == 401:
+            raise UnauthorizedAccess()
+        elif response.code == 404:
+            raise NotFound()
+        elif response.code in range(400, 500):
+            raise ClientError(response)
+        elif response.code in range(500, 600):
+            raise ServerError()
+
+
+import pdb;
+
+pdb.set_trace()
