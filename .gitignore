@@ -1,3 +1,13 @@
 .DS_Store
 .idea/
-
+*.pyc
+__pycache__/
+build/
+env/
+develop-eggs/
+eggs/
+.eggs/
+sdist/
+dist/
+*.egg-info/
+*.egg
