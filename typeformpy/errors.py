@@ -8,7 +8,7 @@ class TypeFormError(StandardError):
 
 
 class ClientError(StandardError):
-    def __init__(self):
+    def __init__(self, response=None):
         pass
 
     def __new__(cls, *args):
@@ -24,7 +24,7 @@ class ServerError(StandardError):
 
 
 class BadRequest(StandardError):
-    def __init__(self):
+    def __init__(self, response=None):
         pass
 
     def __new__(cls, *args):
